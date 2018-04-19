@@ -10,5 +10,8 @@
     },
     "scripts": {
         "start": "node index.js"
+    },
+    "dependencies": {
+        "express": "^4.16.3"
     }
 }
