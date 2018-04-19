@@ -1,0 +1,9 @@
+az account set --subscription "d20432c3-8203-4c39-865a-7c6c2fb1ffd2"
+
+az group create --name EllPiManagerResGroup --location "West US 2"
+
+az appservice plan create --name EllPiManagerServicePlan --resource-group EllPiManagerResGroup --sku FREE
+
+az webapp deployment user set --user-name elladmin --password IntelligentDevices2018
+
+az --% webapp create --resource-group EllPiManagerResGroup --plan EllPiManagerServicePlan --name EllPiManager --runtime "NODE|8.1" --deployment-local-git
