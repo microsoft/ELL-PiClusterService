@@ -33,6 +33,7 @@ Then run the following from the /home/pi folder:
 curl -o monitor.sh -4 http://clovett14/MiscTools/pidatacenter/monitor.sh
 curl -o picluster.py -4 http://clovett14/MiscTools/pidatacenter/picluster.py
 curl -o monitor.py -4 http://clovett14/MiscTools/pidatacenter/monitor.py
+curl -o monitor.py -4 http://clovett14/MiscTools/pidatacenter/endpoint.py
 chmod +x monitor.sh
 ```
 
@@ -53,7 +54,7 @@ But if you want to automate a short job you can import `picluster.py` into your 
 
 ```python
 import picluster
-cluster = picluster.PiBoardTable("http://pidatacenter.cloudapp.net/api/values")
+cluster = picluster.PiBoardTable("https://ellpimanager.azurewebsites.net/")
 machine = self.cluster.wait_for_free_machine("some descriptive job name")
 ```
 This will wait until a machine becomes available, lock it for your job, then you can do what drivetest does to send the job to the machine using SCP and SSH libraries.  When the job is finished run this:
