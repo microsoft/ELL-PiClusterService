@@ -38,7 +38,7 @@ function getMachineList()
 
 function saveMachineList(list)
 {
-    fs.writeFileSync(filename, JSON.stringify(list), 'utf8', null, 2);
+    fs.writeFileSync(filename, JSON.stringify(list), 'utf8', 2);
 }
 
 function findMachine(list, id)
