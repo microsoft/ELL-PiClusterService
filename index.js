@@ -68,6 +68,13 @@ app.get('/', function(req, res) {
     
     var list = getMachineList();
     validate_heartbeats();
+    // show a comment if there is none, but don't save this locally.
+    for (var i in list){
+        m = list[i]
+        if (m.Comment == "") {
+            m.Comment = m.LastHeartbeat
+        }
+    }
     data = {
         title : 'PiManager',
         id : 'main',
