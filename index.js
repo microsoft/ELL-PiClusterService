@@ -8,6 +8,7 @@ var filename = "machines.json";
 var jsonParser = bodyParser.json();
 var apikey = "53D933D0-C44A-4ED1-946D-AFDDA4B9B84C";
 var machineList = null;
+var lastHeartbeat = [];
 
 function validate_heartbeats()
 {
@@ -22,10 +23,9 @@ function validate_heartbeats()
             m.Comment = "dead?";
         } else {
             m.IsAlive = true;
-            if (m.Comment == "dead?") {
-                m.Comment = "";
-            }
+            m.Comment = ""
         }
+        m.Seconds = Math.round(diff/1000).toString();
     }
 }
 
@@ -68,13 +68,6 @@ app.get('/', function(req, res) {
     
     var list = getMachineList();
     validate_heartbeats();
-    // show a comment if there is none, but don't save this locally.
-    for (var i in list){
-        m = list[i]
-        if (m.Comment == "") {
-            m.Comment = m.LastHeartbeat
-        }
-    }
     data = {
         title : 'PiManager',
         id : 'main',
