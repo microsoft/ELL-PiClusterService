@@ -1,6 +1,8 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var fs = require('fs');
+var ECT = require('ect')
+var ectRenderer = ECT({ watch: true, root: __dirname + '/views', ext : '.ect' });
 
 var filename = "machines.json";
 var jsonParser = bodyParser.json();
@@ -53,8 +55,21 @@ function findMachine(list, id)
 }
 
 var app = express();
+
+app.set('view engine', 'ect');
+app.engine('ect', ectRenderer.render);
+
 app.get('/', function(req, res) {
-    res.send("HTML UI is not implemented yet...")
+    
+    var list = getMachineList();
+    validate_heartbeats();
+    data = {
+        title : 'PiManager',
+        id : 'main',
+        list: list
+    }
+
+    res.render('index', data);
 });
 
 app.get('/api', function(req, res) {
