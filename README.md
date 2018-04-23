@@ -19,25 +19,28 @@ This assumes you already setup your remote to azure using this:
 git remote add azure https://elladmin@ellpimanager.scm.azurewebsites.net/EllPiManager.git
 ```
 
-
 ## Adding a Raspberry Pi
 
 To add a Raspberry Pi to the service simply edit the `/etc/rc.local` file and add the following before the bottom exit:
 ```shell
-/home/pi/monitor.sh&
+/home/pi/monitor.sh > /home/pi/monitor.log &
 ```
 Don't forget the ampersand.  
 
 Then run the following from the /home/pi folder:
 ```shell
-curl -o monitor.sh -4 http://clovett14/MiscTools/pidatacenter/monitor.sh
-curl -o picluster.py -4 http://clovett14/MiscTools/pidatacenter/picluster.py
-curl -o monitor.py -4 http://clovett14/MiscTools/pidatacenter/monitor.py
-curl -o monitor.py -4 http://clovett14/MiscTools/pidatacenter/endpoint.py
+wget -q -O blink.sh http://clovett14/MiscTools/pidatacenter/blink.sh 
+wget -q -O setup.sh http://clovett14/MiscTools/pidatacenter/setup.sh
+wget -q -O monitor.sh http://clovett14/MiscTools/pidatacenter/monitor.sh
+wget -q -O picluster.py http://clovett14/MiscTools/pidatacenter/picluster.py
+wget -q -O monitor.py http://clovett14/MiscTools/pidatacenter/monitor.py
+wget -q -O config.txt http://clovett14/MiscTools/pidatacenter/config.txt
+wget -q -O endpoint.py http://clovett14/MiscTools/pidatacenter/endpoint.py
+wget -q -O cpuinfo.py http://clovett14/MiscTools/pidatacenter/cpuinfo.py
 chmod +x monitor.sh
 ```
 
-Or copy these files from MiscTools/PiDataCenter folder.
+Or copy these files from MiscTools/PiDataCenter folder (just make sure that your local git repo has Linux newlines).
 Now when you reboot your pi it will automatically connect to the service and you should see the machine listed there.
 
 ## Using the Service

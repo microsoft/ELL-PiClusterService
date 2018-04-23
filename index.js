@@ -44,6 +44,7 @@ function getMachineList()
 
 function saveMachineList(list)
 {
+    list.sort(function(a,b) { return a.IpAddress.localeCompare(b.IpAddress); })
     fs.writeFileSync(filename, JSON.stringify(list), 'utf8', 2);
 }
 
