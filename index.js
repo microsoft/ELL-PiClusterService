@@ -19,8 +19,12 @@ function validate_heartbeats()
         if (m.LastHeartbeat == "undefined" || diff > 5 * 60000){
             // haven't heard from this machine in 5 minutes!
             m.IsAlive = false;
+            m.Comment = "dead?";
         } else {
             m.IsAlive = true;
+            if (m.Comment == "dead?") {
+                m.Comment = "";
+            }
         }
     }
 }
