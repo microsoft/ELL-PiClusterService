@@ -23,7 +23,9 @@ function validate_heartbeats()
             m.Comment = "dead?";
         } else {
             m.IsAlive = true;
-            m.Comment = ""
+            if (m.Comment == "dead?"){
+                m.Comment = ""
+            }
         }
         m.Seconds = Math.round(diff/1000).toString();
     }
