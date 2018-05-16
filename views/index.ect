@@ -15,26 +15,32 @@
             <table class="table table-striped table-bordered table-auto datatable table-responsive" style="margin-left:auto;margin-right:auto;">
                 <tr>
                     <th>IpAddress</th>
-                    <th>Seconds</th>
+                    <th>Platform</th>
                     <th>Name</th>
                     <th>Version</th>
-                    <th>Platform</th>
                     <th>TaskName</th>
                     <th>UserName</th>
                     <th>Command</th>
+                    <th>HostName</th>
+                    <th>Temperature</th>
+                    <th>SystemLoad</th>
                     <th>Comment</th>
+                    <th>Seconds</th>
                 </tr>
                 <% for m in @list : %>
                 <tr>
                     <td><%- m.IpAddress %></td>
-                    <td><%- m.Seconds %></td>
+                    <td><%- m.Platform %></td>
                     <td><%- m.OsName %></td>
                     <td><%- m.OsVersion %></td>
-                    <td><%- m.Platform %></td>
                     <td><%- m.CurrentTaskName %></td>
                     <td><%- m.CurrentUserName %></td>
                     <td><%- m.Command %></td>
+                    <td><%- m.HostName %></td>
+                    <td><%- m.Temperature %></td>
+                    <td><%- m.SystemLoad %></td>
                     <td><%- m.Comment %></td>
+                    <td><%- m.Seconds %></td>
                 </tr>
                 <% end %>
             </table>
