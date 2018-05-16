@@ -111,6 +111,9 @@ app.post('/api/update', jsonParser, function(req, res) {
             m.OsVersion = req.body.OsVersion;
             m.LastHeartbeat = Date.now();
             m.Comment = req.body.Comment;
+            m.HostName = req.body.HostName;
+            m.Temperature = req.body.Temperature;
+            m.SystemLoad = req.body.SystemLoad;
             m.IsAlive = true
         }
         validate_heartbeats();
