@@ -2,6 +2,8 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var fs = require('fs');
 var ECT = require('ect')
+const log = require("log");
+require("log-node")();
 var ectRenderer = ECT({ watch: true, root: __dirname + '/views', ext : '.ect' });
 
 var filename = "machines.json";
@@ -9,6 +11,10 @@ var jsonParser = bodyParser.json();
 var apikey = "53D933D0-C44A-4ED1-946D-AFDDA4B9B84C";
 var machineList = null;
 var lastHeartbeat = [];
+var locked = false;
+
+var HTTP_INTERNAL_ERROR = 500;
+var HTTP_FORBIDDEN = HTTP_FORBIDDEN;
 
 function validate_heartbeats()
 {
@@ -79,7 +85,7 @@ app.get('/', function(req, res) {
     res.render('index', data);
 });
 
-app.get('/api', function(req, res) {
+app.get('/api', async function(req, res) {
     var list = getMachineList();
     validate_heartbeats();
     var result = list;
@@ -92,8 +98,9 @@ app.get('/api', function(req, res) {
     res.json(list);
 });
 
-app.post('/api/update', jsonParser, function(req, res) {
-    if (!req.body) return res.sendStatus(500);
+app.post('/api/update', jsonParser, async function(req, res) {
+    if (!req.body) return res.sendStatus(INTERNAL_ERROR);
+
     if (req.body.ApiKey === apikey)
     {
         var list = getMachineList();
@@ -120,12 +127,13 @@ app.post('/api/update', jsonParser, function(req, res) {
         saveMachineList(list)
         res.json(m);
     } else {
-        res.sendStatus(403) // forbidden
+        res.sendStatus(HTTP_FORBIDDEN);
     }
 });
 
-app.post('/api/lock', jsonParser, function(req, res) {
-    if (!req.body) return res.sendStatus(500);
+app.post('/api/lock', jsonParser, async function(req, res) {
+    if (!req.body) return res.sendStatus(INTERNAL_ERROR);    
+
     if (req.body.ApiKey === apikey)
     {
         var result = null;
@@ -133,7 +141,7 @@ app.post('/api/lock', jsonParser, function(req, res) {
         var m = findMachine(list, req.body.IpAddress);
         if (m) 
         {
-            if (m.CurrentUserName == "" || m.CurrentUserName == req.body.CurrentUserName || m.Command != "Lock")
+            if (m.Command != "Lock")
             {
                 m.Command = "Lock";
                 m.CurrentUserName = req.body.CurrentUserName;
@@ -145,12 +153,13 @@ app.post('/api/lock', jsonParser, function(req, res) {
         }
         res.json(result);
     } else {
-        res.sendStatus(403) // forbidden
+        res.sendStatus(HTTP_FORBIDDEN);
     }
 });
 
-app.post('/api/free', jsonParser, function(req, res) {
-    if (!req.body) return res.sendStatus(500)
+app.post('/api/free', jsonParser, async function(req, res) {
+    if (!req.body) return res.sendStatus(INTERNAL_ERROR)
+
     if (req.body.ApiKey === apikey)
     {
         var result = null;
@@ -170,12 +179,13 @@ app.post('/api/free', jsonParser, function(req, res) {
         }
         res.json(result);
     } else {
-        res.sendStatus(403) // forbidden
+        res.sendStatus(HTTP_FORBIDDEN);
     }
 });
 
-app.post('/api/delete', jsonParser, function(req, res) {
-    if (!req.body) return res.sendStatus(500);
+app.post('/api/delete', jsonParser, async function(req, res) {
+    if (!req.body) return res.sendStatus(INTERNAL_ERROR);
+
     if (req.body.ApiKey === apikey)
     {
         var result = null;
@@ -189,10 +199,11 @@ app.post('/api/delete', jsonParser, function(req, res) {
         }
         res.json(result);
     } else {
-        res.sendStatus(403) // forbidden
+        res.sendStatus(HTTP_FORBIDDEN);
     }
 });
 
+app.use(express.static(__dirname + '/node_modules/bootstrap/dist'));
 
 var port = process.env.PORT || 1337;
 app.listen(port);
