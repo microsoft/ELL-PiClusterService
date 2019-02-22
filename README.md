@@ -74,7 +74,7 @@ which show how to setup a Raspberry Pi machine so that it automatically register
 
 ## Using the Service
 
-You can also use the service manually by running these two scripts:
+Once the above environemnt variables are configured you can test the service manually by running these scripts:
 * `list.py` to list all available machines and see their status.
 * `lock.py ipaddress` to lock a machine listed as free on the website.
 * `unlock.py ipaddress` to unlock the machine when you are finished.
