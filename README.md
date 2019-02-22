@@ -22,18 +22,15 @@ For local testing all you need to do is run `npm install`.
 
 Set the following environment variables:
 
-| Varaible       | Value                                       |
+| Variable       | Value                                       |
 |----------------|---------------------------------------------|
 | `RPI_CLUSTER`  | The URL of the cluster                      |
 | `RPI_APIKEY`   | The API key to use                          |
 | `RPI_PASSWORD` | The login password for the cluster machines |
 
-For local testing you can set RPI_CLUSTER to `http://localhost:1337/`
-
-Then simply load the folder into [Visual Studio Code](https://code.visualstudio.com/), load index.js and edit the string  `<replace_this_with_your_api_key>` and replace it with your own
-unique GUID, keep this secret.
-
-Then press F5.  You should see this message:
+For local testing you can set RPI_CLUSTER to `http://localhost:1337/`.  Set the RPI_APIKEY to your own new unique guid.
+Then simply load the folder into [Visual Studio Code](https://code.visualstudio.com/), then press F5 and select node.js
+debugging and you should see this message:
 ```
 Server running at http://localhost:1337
 ```
@@ -62,19 +59,19 @@ git push azure master
 Now you can also set your RPI_CLUSTER environment to point to your new
 service, see that you append "/api/" to the end of that URL, and yes that final "/" is important.
 
-| Varaible       | Value                                       |
+| Variable       | Value                                       |
 |----------------|---------------------------------------------|
 | `RPI_CLUSTER`  | `<app_name>.azurewebsites.net/api/`         |
 
 
 ## Adding a Raspberry Pi
 
-Follow the instrutions at [ELL-PiDataCenter](https://github.com/Microsoft/ELL-PiDataCenter/tree/master/PiDataCenter)
+Follow the instructions at [ELL-PiDataCenter](https://github.com/Microsoft/ELL-PiDataCenter/tree/master/PiDataCenter)
 which show how to setup a Raspberry Pi machine so that it automatically registers itself with this service.
 
 ## Using the Service
 
-Once the above environemnt variables are configured you can test the service manually by running these scripts:
+Once the above environment variables are configured you can test the service manually by running these scripts:
 * `list.py` to list all available machines and see their status.
 * `lock.py ipaddress` to lock a machine listed as free on the website.
 * `unlock.py ipaddress` to unlock the machine when you are finished.
