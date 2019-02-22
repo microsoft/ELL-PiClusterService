@@ -50,16 +50,16 @@ Once you follow all these steps you should have a service URL which should look
 something like this: `<app_name>.azurewebsites.net`.  Replace all instances of
 `<app_name>.azurewebsites.net` you see below with your service URL.
 
+Once your service is running you can choose how you want to deploy your updated bits.
+See [App Service Deployment](https://docs.microsoft.com/en-us/azure/app-service/).
+
+If you use Github deployment then pushing new bits is this simple:
+
 ```
 git push azure master
 ```
 
-This assumes you already setup your remote to azure using this:
-```
-git remote add azure <app_name>.azurewebsites.net
-```
-
-Now you can set your RPI_CLUSTER environment to point to your new
+Now you can also set your RPI_CLUSTER environment to point to your new
 service, see that you append "/api/" to the end of that URL, and yes that final "/" is important.
 
 | Varaible       | Value                                       |
