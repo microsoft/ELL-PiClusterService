@@ -61,7 +61,7 @@ you can push new bits by simply pushing to the upstream repo:
 git push azure master
 ```
 
-Now you can also set your RPI_CLUSTER environment to point to your new
+Once you have a service URL you can now set your local RPI_CLUSTER environment variable to point to your new
 service, see that you append "/api/" to the end of that URL, and yes that final "/" is important.
 
 | Variable       | Value                                       |
