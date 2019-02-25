@@ -50,6 +50,9 @@ something like this: `<app_name>.azurewebsites.net`.  Replace all instances of
 Once your service is running you can choose how you want to deploy your updated bits.
 See [App Service Deployment](https://docs.microsoft.com/en-us/azure/app-service/).
 
+The web app also needs to set the `RPI_APIKEY` environment, `index.js` expects this to be set and you can configure that using
+the Azure Portal under Application Settings.
+
 If you use Github deployment then pushing new bits is this simple:
 
 ```

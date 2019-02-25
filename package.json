@@ -1,19 +1,24 @@
 {
-    "name": "ell-pi-cluster-service",
-    "description": "A simple node.js raspberry pi manager for hosting in Azure App Service",
+    "name": "ell-pi-manager",
+    "description": "A simple node.js raspberry pi manager for hosting in an Azure App Service",
     "version": "0.0.1",
     "private": true,
     "license": "MIT",
     "author": "Microsoft",
     "engines": {
-        "node": ">=6.9.1"
+        "node": ">=8.0.0"
     },
     "scripts": {
         "start": "node index.js"
     },
     "dependencies": {
-        "body-parser": "^1.18.2",
+        "body-parser": "^1.18.3",
+        "bootstrap": "^4.2.1",
         "ect": "^0.5.9",
-        "express": "^4.16.3"
+        "express": "^4.16.4",
+        "jquery": "^3.3.1",
+        "log": "^3.2.0",
+        "log-node": "^3.2.1",
+        "popper.js": "^1.14.6"
     }
 }
