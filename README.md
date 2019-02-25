@@ -53,7 +53,9 @@ See [App Service Deployment](https://docs.microsoft.com/en-us/azure/app-service/
 The web app also needs to set the `RPI_APIKEY` environment, `index.js` expects this to be set and you can configure that using
 the Azure Portal under Application Settings.
 
-If you use Github deployment then pushing new bits is this simple:
+If you use Github deployment from "local git" then once you have configured the upstream azure git repo
+using the URL provided in the Deployment Trigger URL in the Azure Management Portal Properties for your App Service
+you can push new bits by simply pushing to the upstream repo:
 
 ```
 git push azure master
