@@ -16,6 +16,8 @@ var locked = false;
 var HTTP_INTERNAL_ERROR = 500;
 var HTTP_FORBIDDEN = HTTP_FORBIDDEN;
 
+console.log("Server starting...");
+
 function validate_heartbeats()
 {
     var now =  Date.now();
@@ -73,7 +75,7 @@ app.set('view engine', 'ect');
 app.engine('ect', ectRenderer.render);
 
 app.get('/', function(req, res) {
-    
+
     var list = getMachineList();
     validate_heartbeats();
     data = {
@@ -132,14 +134,14 @@ app.post('/api/update', jsonParser, async function(req, res) {
 });
 
 app.post('/api/lock', jsonParser, async function(req, res) {
-    if (!req.body) return res.sendStatus(INTERNAL_ERROR);    
+    if (!req.body) return res.sendStatus(INTERNAL_ERROR);
 
     if (req.body.ApiKey === apikey)
     {
         var result = null;
         var list = getMachineList();
         var m = findMachine(list, req.body.IpAddress);
-        if (m) 
+        if (m)
         {
             if (m.Command != "Lock")
             {
@@ -165,7 +167,7 @@ app.post('/api/free', jsonParser, async function(req, res) {
         var result = null;
         var list = getMachineList();
         var m = findMachine(list, req.body.IpAddress);
-        if (m) 
+        if (m)
         {
             if (m.CurrentUserName == "" || m.CurrentUserName == req.body.CurrentUserName)
             {
@@ -191,7 +193,7 @@ app.post('/api/delete', jsonParser, async function(req, res) {
         var result = null;
         var list = getMachineList();
         var m = findMachine(list, req.body.IpAddress);
-        if (m && m.Command != "Lock") 
+        if (m && m.Command != "Lock")
         {
             list.splice(list.indexOf(m), 1);
             saveMachineList(list);
@@ -202,6 +204,10 @@ app.post('/api/delete', jsonParser, async function(req, res) {
         res.sendStatus(HTTP_FORBIDDEN);
     }
 });
+
+app.use(function (err, req, res, next) {
+    res.status(500).send('Something broke in ' + err.stack)
+})
 
 app.use(express.static(__dirname + '/node_modules/bootstrap/dist'));
 
