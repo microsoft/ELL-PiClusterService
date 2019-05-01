@@ -101,35 +101,40 @@ app.get('/api', async function(req, res) {
 });
 
 app.post('/api/update', jsonParser, async function(req, res) {
-    if (!req.body) return res.sendStatus(INTERNAL_ERROR);
+    try {
+        if (!req.body) return res.sendStatus(INTERNAL_ERROR);
 
-    if (req.body.ApiKey === apikey)
-    {
-        var list = getMachineList();
-        var m = findMachine(list, req.body.IpAddress);
-        if (m == null) {
-            m = req.body;
-            m.LastHeartbeat = Date.now();
-            delete m.ApiKey;
-            list.push(m);
+        if (req.body.ApiKey === apikey)
+        {
+            var list = getMachineList();
+            var m = findMachine(list, req.body.IpAddress);
+            if (m == null) {
+                m = req.body;
+                m.LastHeartbeat = Date.now();
+                delete m.ApiKey;
+                list.push(m);
+            } else {
+                // merge what we are allowed to merge here
+                // update is not allowed to change the current user or command info.
+                m.Platform = req.body.Platform;
+                m.OsName = req.body.OsName;
+                m.OsVersion = req.body.OsVersion;
+                m.LastHeartbeat = Date.now();
+                m.Comment = req.body.Comment;
+                m.HostName = req.body.HostName;
+                m.Temperature = req.body.Temperature;
+                m.SystemLoad = req.body.SystemLoad;
+                m.IsAlive = true
+            }
+            validate_heartbeats();
+            saveMachineList(list)
+            res.json(m);
         } else {
-            // merge what we are allowed to merge here
-            // update is not allowed to change the current user or command info.
-            m.Platform = req.body.Platform;
-            m.OsName = req.body.OsName;
-            m.OsVersion = req.body.OsVersion;
-            m.LastHeartbeat = Date.now();
-            m.Comment = req.body.Comment;
-            m.HostName = req.body.HostName;
-            m.Temperature = req.body.Temperature;
-            m.SystemLoad = req.body.SystemLoad;
-            m.IsAlive = true
+            res.sendStatus(HTTP_FORBIDDEN);
         }
-        validate_heartbeats();
-        saveMachineList(list)
-        res.json(m);
-    } else {
-        res.sendStatus(HTTP_FORBIDDEN);
+    } catch (e){
+        console.log("error", e);
+        res.json({"error":e.description})
     }
 });
 
