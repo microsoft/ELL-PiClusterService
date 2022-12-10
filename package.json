@@ -15,7 +15,7 @@
         "body-parser": "^1.19.0",
         "bootstrap": "^4.6.0",
         "ect": "^0.5.9",
-        "express": "^4.17.1",
+        "express": "^4.17.3",
         "jquery": "^3.6.0",
         "log": "^6.0.0",
         "log-node": "^7.0.0",
